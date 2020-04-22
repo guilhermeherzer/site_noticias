@@ -7,7 +7,7 @@ module.exports = function(app){
 	});
 
 	app.get('/formulario', function(req, res){
-		res.render('admin/form_add_noticia');
+		res.render('admin/form_add_noticia', {error: {}});
 	});
 
 	app.get('/noticias', function(req, res){
@@ -39,12 +39,12 @@ module.exports = function(app){
 		], function(req, res){
 		var noticia = req.body;
 
-
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			console.log(errors.array());
-    		return res.status(422).json({ errors: errors.array() });
+			console.log(errors);
+    		res.render('admin/form_add_noticia', {error: errors.array()});
+    		return;
   		}
 
 		var connection = app.config.dbConnection();
