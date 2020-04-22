@@ -11,9 +11,9 @@ module.exports = function(app){
 	app.get('/noticias', function(req, res){
 		var connection = app.config.dbConnection();
 
-		var noticiasModel = app.app.models.noticiasModel;
+		var noticiasModel = new app.app.models.NoticiasDAO(connection);
 
-		noticiasModel.getNoticias(connection, function(error, result){
+		noticiasModel.getNoticias(function(error, result){
 			res.render('noticias/noticias', {noticias: result});
 		});
 	});
@@ -21,9 +21,9 @@ module.exports = function(app){
 	app.get('/noticia', function(req, res){
 		var connection = app.config.dbConnection();
 
-		var noticiasModel = app.app.models.noticiasModel;
+		var noticiasModel = new app.app.models.NoticiasDAO(connection);
 
-		noticiasModel.getNoticia(connection, function(error, result){
+		noticiasModel.getNoticia(function(error, result){
 			res.render('noticias/noticia', {noticia: result});
 		});
 	});
@@ -33,9 +33,9 @@ module.exports = function(app){
 
 		var connection = app.config.dbConnection();
 
-		var noticiasModel = app.app.models.noticiasModel;
+		var noticiasModel = new app.app.models.NoticiasDAO(connection);
 
-		noticiasModel.postNoticia(noticia, connection, function(error, result){
+		noticiasModel.postNoticia(noticia, function(error, result){
 			res.redirect('/noticias');
 		});
 	});
