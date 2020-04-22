@@ -7,7 +7,7 @@ module.exports = function(app){
 	});
 
 	app.get('/formulario', function(req, res){
-		res.render('admin/form_add_noticia', {error: {}});
+		res.render('admin/form_add_noticia', {error: {}, noticia: {}});
 	});
 
 	app.get('/noticias', function(req, res){
@@ -43,7 +43,7 @@ module.exports = function(app){
 
 		if (!errors.isEmpty()) {
 			console.log(errors);
-    		res.render('admin/form_add_noticia', {error: errors.array()});
+    		res.render('admin/form_add_noticia', {error: errors.array(), noticia: noticia});
     		return;
   		}
 

@@ -17,16 +17,16 @@
 		<% } %>
 		<form action="/noticia/salvar" method="post">
 			<label>Titulo</label>
-			<input name="titulo">
+			<input name="titulo" value="<%= noticia.titulo %>">
 			<br>
 			<label>Resumo</label>
-			<input name="resumo">
+			<input name="resumo" value="<%= noticia.resumo %>">
 			<br>
 			<label>Autor</label>
-			<input name="autor">
+			<input name="autor" value="<%= noticia.autor %>">
 			<br>
 			<label>Noticia</label>
-			<textarea name="noticia" rows="5" cols="30"></textarea>
+			<textarea name="noticia" rows="5" cols="30"><%= noticia.noticia %></textarea>
 			<br>
 			<input type="submit" value="Enviar">
 		</form>
