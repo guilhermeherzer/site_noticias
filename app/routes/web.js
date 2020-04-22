@@ -27,4 +27,16 @@ module.exports = function(app){
 			res.render('noticias/noticia', {noticia: result});
 		});
 	});
+
+	app.post('/noticia/salvar', function(req, res){
+		var noticia = req.body;
+
+		var connection = app.config.dbConnection();
+
+		var noticiasModel = app.app.models.noticiasModel;
+
+		noticiasModel.postNoticia(noticia, connection, function(error, result){
+			res.redirect('/noticias');
+		});
+	});
 };
