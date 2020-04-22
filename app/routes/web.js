@@ -1,3 +1,5 @@
+const { check, validationResult } = require('express-validator');
+
 module.exports = function(app){
 
 	app.get('/', function(req, res){
@@ -28,11 +30,24 @@ module.exports = function(app){
 		});
 	});
 
-	app.post('/noticia/salvar', function(req, res){
+	app.post('/noticia/salvar', [
+			check('titulo', 'Título obrigatório').notEmpty(),
+			check('resumo', 'Resumo obrigatório').notEmpty(),
+			check('resumo', 'Resumo deve conter entre 10 e 100 caracteres').isLength({min: 10, max: 100}),
+			check('autor', 'Autor obrigatório').notEmpty(),
+			check('noticia', 'Noticia obrigatório').notEmpty()
+		], function(req, res){
 		var noticia = req.body;
 
-		var connection = app.config.dbConnection();
 
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			console.log(errors.array());
+    		return res.status(422).json({ errors: errors.array() });
+  		}
+
+		var connection = app.config.dbConnection();
 		var noticiasModel = new app.app.models.NoticiasDAO(connection);
 
 		noticiasModel.postNoticia(noticia, function(error, result){
